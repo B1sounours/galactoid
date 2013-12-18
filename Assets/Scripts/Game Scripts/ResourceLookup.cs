@@ -6,7 +6,9 @@ using System.Collections;
 public class ResourceLookup : MonoBehaviour
 {
     private static ArrayList blockDatas;
+    private static ArrayList skyboxes;
     private static GameObject blockPrefab;
+    private static GameObject planePrefab;
 
     static private ArrayList getBlockDatas()
     {
@@ -28,6 +30,28 @@ public class ResourceLookup : MonoBehaviour
             blockPrefab = Resources.Load(ResourcePaths.blockPrefab) as GameObject;
 
         return blockPrefab;
+    }
+
+    static public GameObject getPlanePrefab()
+    {
+        if (planePrefab == null)
+            planePrefab = Resources.Load(ResourcePaths.planePrefab) as GameObject;
+
+        return planePrefab;
+    }
+
+    static public ArrayList getSkyboxPrefabs()
+    {
+        if (skyboxes != null)
+            return skyboxes;
+
+        skyboxes = new ArrayList();
+        foreach (GameObject go in Resources.LoadAll(ResourcePaths.skyboxFolder))
+        {
+            skyboxes.Add(go);
+        }
+
+        return skyboxes;
     }
 
     static public BlockData getBlockByName(string blockName)

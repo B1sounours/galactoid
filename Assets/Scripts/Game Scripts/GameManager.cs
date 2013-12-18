@@ -13,10 +13,11 @@ public class GameManager : MonoBehaviour
     {
         sm = gameObject.AddComponent<ShipModel>();
         gameObject.AddComponent<GameMenuManager>();
+        gameObject.AddComponent<SkyboxManager>();
         getPlayer();
 
         debug1();
-        //genSpaceMakers ();
+        //genSkyboxs ();
     }
 
     private void makeDebugLight(Vector3 rotation)

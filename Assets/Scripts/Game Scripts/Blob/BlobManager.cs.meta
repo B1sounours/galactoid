@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: cb6a03a486447cc479f6e196134de037
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - normalVoxel: {fileID: 100000, guid: 65e898f3238924adb90a6bd5e126cc69, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 

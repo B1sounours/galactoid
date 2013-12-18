@@ -10,12 +10,10 @@ public class CharacterMotor : MonoBehaviour
 {
     bool isInputEnabled = true;
     bool useFixedUpdate = true;
-	private PlayerCounter playerCounter;
 	
 	public class CharacterMotorInput{
 		public Vector3 direction = Vector3.zero;
 		public bool jump = false;
-		public bool gravityOff = false;
 	}
 	public CharacterMotorInput input=new CharacterMotorInput();
 
@@ -174,9 +172,6 @@ public class CharacterMotor : MonoBehaviour
     public Transform tr;
     private CharacterController controller;
 	
-	[System.NonSerialized]
-	public GameObject lastFloorGameObject;
-	
     void Awake()
     {
         controller = GetComponent<CharacterController>();
@@ -242,8 +237,6 @@ public class CharacterMotor : MonoBehaviour
     {
         // We copy the actual velocity into a temporary variable that we can manipulate.
         Vector3 velocity = movement.velocity;
-		
-		updateGravity();
 		
         // Update velocity based on input
         velocity = ApplyInputVelocityChange(velocity);
@@ -436,7 +429,6 @@ public class CharacterMotor : MonoBehaviour
 
         if(input.jump && jumping.lastButtonDownTime < 0 && isInputEnabled){
             jumping.lastButtonDownTime = Time.time;
-			getPlayerCounter().usedJump=true;
 		}
 
         if(grounded)
@@ -514,7 +506,6 @@ public class CharacterMotor : MonoBehaviour
         {
             if((hit.point - movement.lastHitPoint).sqrMagnitude > 0.001 || lastGroundNormal == Vector3.zero){
                 groundNormal = hit.normal;
-				lastFloorGameObject=hit.gameObject;
 			}else{
                 groundNormal = lastGroundNormal;
 			}
@@ -655,29 +646,5 @@ public class CharacterMotor : MonoBehaviour
         movement.frameVelocity = Vector3.zero;
         //SendMessage("OnExternalVelocity");
     }
-	
-	private void resetGravity(){
-		movement.gravity=movement.regularGravity;
-	}
-	
-	private PlayerCounter getPlayerCounter ()
-	{
-		if (playerCounter == null)
-			playerCounter = (PlayerCounter)FindObjectOfType (typeof(PlayerCounter));
-		
-		return playerCounter;
-	}
-	
-	private void updateGravity() {
-		if(input.gravityOff){
-			if(!grounded){
-				movement.gravity=grounded?movement.regularGravity:0;
-				getPlayerCounter().usedFly=true;	
-			}
-		}else{
-			resetGravity();
-		}
-	}
-	
 
 }

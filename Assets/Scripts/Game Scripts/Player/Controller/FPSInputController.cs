@@ -40,7 +40,5 @@ public class FPSInputController : MonoBehaviour
 		// Apply the direction to the CharacterMotor
 		motor.input.direction = transform.rotation * directionVector;
 		motor.input.jump = Input.GetButton ("Jump");
-		
-		motor.input.gravityOff = Input.GetButton ("NoGrav");
 	}
 }

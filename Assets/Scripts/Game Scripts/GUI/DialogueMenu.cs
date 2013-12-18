@@ -28,7 +28,7 @@ public class DialogueMenu
 		this.title=title;
 		this.mainText="";
 		tableItems=new ArrayList();
-		background = Resources.Load ("Textures/GUI/dialogue") as Texture;
+		background = Resources.Load (ResourcePaths.mainSplash) as Texture;
 		titleStyle = MenuTemplate.getLabelStyle (25, TextAnchor.UpperCenter, Color.black);
 		mainTextStyle = MenuTemplate.getLabelStyle (35, TextAnchor.UpperCenter, Color.black);
 		normalStyle = MenuTemplate.getLabelStyle (46, TextAnchor.UpperLeft, Color.black);

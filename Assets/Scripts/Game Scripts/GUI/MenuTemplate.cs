@@ -21,7 +21,7 @@ public class MenuTemplate
 	{
 		menuName = name;
 		itemTemplates = new ArrayList ();
-		mainBackground = Resources.Load ("Textures/MainBackground") as Texture;
+		mainBackground = Resources.Load (ResourcePaths.mainSplash) as Texture;
 		setStyles ();
 	}
 	
@@ -29,7 +29,7 @@ public class MenuTemplate
 	{
 		//if fontDivisor is large, the fontSize will be smaller, linearly proportional to screen width
 		GUIStyle newStyle = new GUIStyle ();
-		newStyle.font = Resources.Load ("Fonts/PasseroOne-Regular") as Font;
+		newStyle.font = Resources.Load (ResourcePaths.mainFont) as Font;
 		newStyle.normal.textColor = Color.white;
 		newStyle.alignment = TextAnchor.UpperRight;
 		newStyle.fontSize = Screen.width / fontDivisor;
@@ -48,17 +48,17 @@ public class MenuTemplate
 	
 	public void setTitle ()
 	{
-		addText ("Viroid", MenuTemplate.MenuFonts.title);
+		addText ("Galactoid", MenuTemplate.MenuFonts.title);
 		//addText ("Greeble Madness", MenuTemplate.MenuFonts.small);
 	}
 	
 	private void setStyles ()
 	{	
 		styles = new Hashtable ();
-		styles [MenuFonts.title] = getLabelStyle (10);
-		styles [MenuFonts.large] = getLabelStyle (16);
-		styles [MenuFonts.medium] = getLabelStyle (28);
-		styles [MenuFonts.small] = getLabelStyle (40);
+		styles [MenuFonts.title] = getLabelStyle (15);
+		styles [MenuFonts.large] = getLabelStyle (20);
+		styles [MenuFonts.medium] = getLabelStyle (34);
+		styles [MenuFonts.small] = getLabelStyle (50);
 	}
 	
 	public void addButton (string text)

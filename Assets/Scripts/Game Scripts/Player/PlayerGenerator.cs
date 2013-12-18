@@ -53,9 +53,6 @@ public static class PlayerGenerator
 		cm.movement.regularGravity = 9.81f;
 		cm.jumping.minHeight = 2f;
 		cm.jumping.maxHeight = 2f;
-		
-		
-		player.AddComponent<LeaveMapTeleporter>();
 	}
 
 	private static void setPlayerComponents ()
@@ -66,10 +63,9 @@ public static class PlayerGenerator
 		
 		player.AddComponent<FPSInputController> ();
 		player.AddComponent<AudioListener> ();
-		player.AddComponent<PlayerCounter>();
 		player.AddComponent<PlayerController>();
 		
-		player.AddComponent<VoxelTargeting> ();
+		player.AddComponent<ClickBlock> ();
 	}
 
 }

@@ -33,11 +33,11 @@ public class ShipModel : MonoBehaviour
 		blocks [point.x, point.y, point.z] = null;
 	}
 	
-	private void createBlock (int blockCode, IntVector3 point)
+	public void createBlock (int blockCode, IntVector3 point)
 	{
 		//Debug.Log ("create block: i: " + i + " j: " + j + " k: " + k);
 		if (! sv.isInsideArray (point)) {
-			print ("createBlock bad coordinates: " + ZDebug.toString (point));
+			Debug.Log ("createBlock bad coordinates: " + ZDebug.toString (point));
 			return;
 		}
 

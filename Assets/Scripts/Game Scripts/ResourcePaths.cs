@@ -14,7 +14,7 @@ public class ResourcePaths
 
     static ResourcePaths()
 	{
-        blockDataFolder = "Prefabs/Block Datas";
+        blockDataFolder = "Prefabs/blockdata";
         blockPrefab = "Prefabs/Block";
         mainSplash = "Textures/main_splash";
         mainFont = "Fonts/startrek";

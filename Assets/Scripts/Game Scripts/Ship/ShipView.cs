@@ -14,7 +14,7 @@ public class ShipView
 
     public bool isBlockOccupied(IntVector3 point)
     {
-        return !sm.blocks[point.x, point.y, point.z] == null;
+        return !(sm.blocks[point.x, point.y, point.z] == null);
     }
 
     public bool isInsideArray(IntVector3 point)

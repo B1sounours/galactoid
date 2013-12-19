@@ -37,9 +37,15 @@ public class ShipModel : MonoBehaviour
 	{
 		//Debug.Log ("create block: i: " + i + " j: " + j + " k: " + k);
 		if (! sv.isInsideArray (point)) {
-			Debug.Log ("createBlock bad coordinates: " + ZDebug.toString (point));
+			Debug.Log ("aborted createBlock. bad coordinates: " + ZDebug.toString (point));
 			return;
 		}
+        if (sv.isBlockOccupied(point))
+        {
+            Debug.Log("aborted createBlock. occupied coordinates: " + ZDebug.toString(point));
+            return;
+        }
+
 
         GameObject blockGO = Instantiate(ResourceLookup.getBlockPrefab(), point.getVector3(), Quaternion.identity) as GameObject;
 		BlockData blockData = ResourceLookup.getBlockByCode (blockCode);
@@ -52,7 +58,6 @@ public class ShipModel : MonoBehaviour
 			blockGO.transform.eulerAngles = Angles.getFlat ();
 		}
 		blockGO.transform.parent = transform;
-		
 		blocks [point.x, point.y, point.z] = block;
 	}
 	

@@ -1,6 +1,11 @@
 using UnityEngine;
 using System.Collections;
 
+/*
+ * the GameManager authorizes all in game actions and events. All player input must be routed here 
+ * in order to make changes to the game world.
+ */
+
 public class GameManager : MonoBehaviour
 {
     private GameObject player;
@@ -17,32 +22,28 @@ public class GameManager : MonoBehaviour
         getPlayer();
 
         debug1();
-        //genSkyboxs ();
     }
 
-    private void makeDebugLight(Vector3 rotation)
+    void Update()
     {
-        GameObject go = new GameObject("light");
-        go.transform.rotation.Set(rotation.x, rotation.y,rotation.z,0);
-        Light light = go.AddComponent<Light>();
-        light.intensity = 5;
-        light.type = LightType.Directional;
     }
 
-    private void makeDebugPlatform()
-    {
-        for (int i = 0; i < 10; i++)
-            for (int j = 0; j < 10; j++)
-                sm.createBlock(0, new IntVector3(i, 0, j));
+    public void requestPlaceBlock(IntVector3 position){
+        sm.createBlock(0, position);
     }
 
     private void debug1()
     {
         getPlayer().GetComponent<CharacterMotor>().tr.position = new Vector3(2, 2, 2);
-        makeDebugPlatform();
-        makeDebugLight(new Vector3(0, 300, 0));
-        makeDebugLight(new Vector3(50, 50, 0));
-        makeDebugLight(new Vector3(100, 180, 50));
+
+        for (int i = 0; i < 10; i++)
+            for (int j = 0; j < 10; j++)
+                sm.createBlock(0, new IntVector3(i, 0, j));
+
+        sm.createBlock(0, new IntVector3(5, 1, 5));
+        sm.createBlock(0, new IntVector3(5, 2, 5));
+        sm.createBlock(0, new IntVector3(5, 3, 5));
+        sm.createBlock(0, new IntVector3(5, 3, 6));
     }
 
     public GameObject getBlockPrefab()
@@ -51,9 +52,6 @@ public class GameManager : MonoBehaviour
             blockPrefab = ResourceLookup.getBlockPrefab();
 
         return blockPrefab;
-    }
-    void Update()
-    {
     }
 
     public GameObject getPlayer()

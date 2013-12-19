@@ -19,7 +19,7 @@ public class ResourcePaths
         blockDataFolder = "Prefabs/blockdata";
         skyboxFolder = "Prefabs/skybox";
         planePrefab = "Prefabs/skyboxPlane";
-        blockPrefab = "Prefabs/Block";
+        blockPrefab = "Prefabs/block";
         mainSplash = "Textures/main_splash";
         mainFont = "Fonts/startrek";
 	}

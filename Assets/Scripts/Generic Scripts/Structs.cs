@@ -40,6 +40,13 @@ public struct IntVector3
 		this.y = y;
 		this.z = z;
 	}
+
+    public IntVector3(float x, float y, float z)
+    {
+        this.x = (int)x;
+        this.y = (int)y;
+        this.z = (int)z;
+    }
 	
 	public bool isOrthogonalUnitVector ()
 	{

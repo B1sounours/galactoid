@@ -7,7 +7,8 @@ public static class PlayerGenerator
 	
 	public static GameObject genPlayer ()
 	{
-		player = new GameObject ("Player");	
+		player = new GameObject ("Player");
+
 		setMainCamera ();
 		setSpaceCamera ();
 		setCharacterController ();
@@ -64,8 +65,7 @@ public static class PlayerGenerator
 		player.AddComponent<FPSInputController> ();
 		player.AddComponent<AudioListener> ();
 		player.AddComponent<PlayerController>();
-		
-		player.AddComponent<ClickBlock> ();
+		player.AddComponent<PlayerClicker> ();
 	}
 
 }

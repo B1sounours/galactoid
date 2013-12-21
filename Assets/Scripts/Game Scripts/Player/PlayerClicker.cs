@@ -18,19 +18,38 @@ public class PlayerClicker : MonoBehaviour
 	{
         timeSinceLastClick += Time.deltaTime;
 
-		if (Input.GetMouseButtonDown(1) || (Input.GetMouseButton(1) && timeSinceLastClick>0.5)) {
-            timeSinceLastClick = 0;
-            float range = 100;
-			Vector3 pos = cameraTransform.position;
-			RaycastHit rayCastHit = new RaycastHit ();
-			if (Physics.Linecast (pos, pos + cameraTransform.forward * range, out rayCastHit, 1)) {
-				GameObject blockObject = rayCastHit.transform.gameObject;
-                //Debug.Log("left clicked: " + blockObject.GetComponent<Block>().name + "raycast: "+rayCastHit.point);
-                IntVector3 adj = getAdjacentCoordFromClick(blockObject.transform.position, rayCastHit.point);
-                //ZDebug.show(adj);
-                gameManager.requestPlaceBlock(adj);
-			}
-		}
+        for (int mouseButton = 0; mouseButton < 2; mouseButton++)
+        {
+            if (Input.GetMouseButtonDown(mouseButton) || (Input.GetMouseButton(mouseButton) && timeSinceLastClick > 0.3))
+            {
+                timeSinceLastClick = 0;
+                float range = 100;
+                Vector3 pos = cameraTransform.position;
+                RaycastHit rayCastHit = new RaycastHit();
+                if (Physics.Linecast(pos, pos + cameraTransform.forward * range, out rayCastHit, 1))
+                {
+                    GameObject blockObject = rayCastHit.transform.gameObject;
+                    IntVector3 clicked = new IntVector3(blockObject.transform.position);
+                    if (GameOptions.mouseTool[mouseButton] == GameOptions.toolModes.placeBlock)
+                    {
+                        IntVector3 adjacent = getAdjacentCoordFromClick(blockObject.transform.position, rayCastHit.point);
+                        gameManager.requestPlaceBlock(adjacent);
+                    }
+                    else if (GameOptions.mouseTool[mouseButton] == GameOptions.toolModes.removeBlock)
+                    {
+                        gameManager.requestHarvestBlock(clicked);
+                    }
+                    else if (GameOptions.mouseTool[mouseButton] == GameOptions.toolModes.repairBlock)
+                    {
+                        Debug.Log("repair block is undefined");
+                    }
+                    else if (GameOptions.mouseTool[mouseButton] == GameOptions.toolModes.scanBlock)
+                    {
+                        Debug.Log("scan block is undefined");
+                    }
+                }
+            }
+        }
 	}
 
     private IntVector3 getAdjacentCoordFromClick(Vector3 blockPosition, Vector3 clickPoint)

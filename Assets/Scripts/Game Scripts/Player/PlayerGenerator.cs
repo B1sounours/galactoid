@@ -64,8 +64,8 @@ public static class PlayerGenerator
 		
 		player.AddComponent<FPSInputController> ();
 		player.AddComponent<AudioListener> ();
+        player.AddComponent<PlayerClicker>();
 		player.AddComponent<PlayerController>();
-		player.AddComponent<PlayerClicker> ();
 	}
 
 }

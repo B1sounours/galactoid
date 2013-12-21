@@ -10,6 +10,30 @@ public class ResourceLookup : MonoBehaviour
     private static GameObject blockPrefab;
     private static GameObject planePrefab;
 
+    private static Hashtable toolModeTextures;
+
+    static public Texture getToolModeTexture(GameOptions.toolModes toolMode)
+    {
+        if (toolModeTextures == null)
+        {
+            toolModeTextures = new Hashtable();
+
+            Texture texture = Resources.Load(ResourcePaths.toolModePlace) as Texture;
+            toolModeTextures.Add(GameOptions.toolModes.placeBlock, texture);
+
+            texture = Resources.Load(ResourcePaths.toolModeRemove) as Texture;
+            toolModeTextures.Add(GameOptions.toolModes.removeBlock, texture);
+
+            texture = Resources.Load(ResourcePaths.toolModeRepair) as Texture;
+            toolModeTextures.Add(GameOptions.toolModes.repairBlock, texture);
+
+            texture = Resources.Load(ResourcePaths.toolModeScan) as Texture;
+            toolModeTextures.Add(GameOptions.toolModes.scanBlock, texture);
+        }
+
+        return (Texture)toolModeTextures[toolMode];
+    }
+
     static private ArrayList getBlockDatas()
     {
         if (blockDatas != null)
@@ -20,6 +44,21 @@ public class ResourceLookup : MonoBehaviour
         {
             blockDatas.Add(go.GetComponent<BlockData>());
         }
+
+        /*
+        int counter=0;
+        foreach (Texture texture in Resources.LoadAll<Texture2D>(ResourcePaths.blockTextures))
+        {
+            GameObject go = new GameObject("automated blockdata");
+            BlockData bd = go.AddComponent<BlockData>();
+            Debug.Log(texture);
+            bd.textures = new Texture[1];
+            bd.textures.SetValue(texture, counter);
+            bd.blockCode = counter + 1;
+            counter++;
+            blockDatas.Add(bd);
+        }
+         */
 
         return blockDatas;
     }
@@ -54,7 +93,7 @@ public class ResourceLookup : MonoBehaviour
         return skyboxes;
     }
 
-    static public BlockData getBlockByName(string blockName)
+    static public BlockData getBlockDataByName(string blockName)
     {
         //optimization: this should be a hashtable
         foreach (BlockData blockData in getBlockDatas())
@@ -71,11 +110,11 @@ public class ResourceLookup : MonoBehaviour
         else
         {
             Debug.Log("warning: failed to find blockData with name: " + blockName);
-            return getBlockByName("default");
+            return getBlockDataByName("default");
         }
     }
 
-    static public BlockData getBlockByCode(int blockCode)
+    static public BlockData getBlockDataByCode(int blockCode)
     {
         foreach (BlockData blockData in getBlockDatas())
         {
@@ -84,6 +123,6 @@ public class ResourceLookup : MonoBehaviour
         }
 
         Debug.Log("warning: failed to find blockData with code: " + blockCode);
-        return getBlockByName("default");
+        return getBlockDataByName("default");
     }
 }

@@ -27,7 +27,7 @@ public class ShipModel : MonoBehaviour
 			Debug.Log ("removeBlock got unoccupied request " + ZDebug.toString (point));
 			return;
 		}
-		
+
 		Block block = (Block)blocks [point.x, point.y, point.z];
         block.remove();
 		blocks [point.x, point.y, point.z] = null;
@@ -48,9 +48,9 @@ public class ShipModel : MonoBehaviour
 
 
         GameObject blockGO = Instantiate(ResourceLookup.getBlockPrefab(), point.getVector3(), Quaternion.identity) as GameObject;
-		BlockData blockData = ResourceLookup.getBlockByCode (blockCode);
+		BlockData blockData = ResourceLookup.getBlockDataByCode (blockCode);
         Block block = blockGO.GetComponent<Block>();
-        block.initialize (blockData, point);
+        block.initialize (blockData, blockGO,point);
 		
 		if (blockData.isRotationRandom) {
 			blockGO.transform.eulerAngles = Angles.getRandom ();

@@ -29,21 +29,28 @@ public class GameManager : MonoBehaviour
     }
 
     public void requestPlaceBlock(IntVector3 position){
-        sm.createBlock(0, position);
+        sm.createBlock(3, position);
+    }
+
+    public void requestHarvestBlock(IntVector3 position)
+    {
+        sm.removeBlock(position);
     }
 
     private void debug1()
     {
         getPlayer().GetComponent<CharacterMotor>().tr.position = new Vector3(2, 2, 2);
 
-        for (int i = 0; i < 10; i++)
-            for (int j = 0; j < 10; j++)
-                sm.createBlock(0, new IntVector3(i, 0, j));
+        for (int i = 0; i < 40; i++)
+            for (int j = 0; j < 40; j++)
+                sm.createBlock(0, new IntVector3(i, j/10, j));
 
-        sm.createBlock(0, new IntVector3(5, 1, 5));
-        sm.createBlock(0, new IntVector3(5, 2, 5));
-        sm.createBlock(0, new IntVector3(5, 3, 5));
-        sm.createBlock(0, new IntVector3(5, 3, 6));
+        for (int i = 0; i < 30; i++)
+        {
+            sm.createBlock(1, new IntVector3(20, i, 20));
+            sm.createBlock(2, new IntVector3(40, i, 70));
+            sm.createBlock(3, new IntVector3(60, i, 20));
+        }
     }
 
     public GameObject getBlockPrefab()

@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 public class FPSInputController : MonoBehaviour
 {
-	private CharacterMotor motor;
+	public CharacterMotor motor;
 	
 	void Awake ()
 	{

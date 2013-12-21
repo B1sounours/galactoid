@@ -7,12 +7,14 @@ public class Block : MonoBehaviour
 	private int textureIndex;
     private IntVector3 position;
     private GameObject blockPrefab;
+    private GameObject blockGameObject;
 
-    public void initialize(BlockData blockData, IntVector3 position)
+    public void initialize(BlockData blockData, GameObject blockGameObject, IntVector3 position)
 	{
         this.position = position;
         textureIndex = 0;
 		setBlockData (blockData);
+        this.blockGameObject = blockGameObject;
 		setName ();
 	}
 
@@ -37,6 +39,7 @@ public class Block : MonoBehaviour
 
     public void remove()
     {
+        Destroy(blockGameObject);
     }
 }
 

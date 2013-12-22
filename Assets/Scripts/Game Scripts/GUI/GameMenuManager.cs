@@ -8,23 +8,25 @@ public class GameMenuManager : MonoBehaviour
     {
         gameplay,
         paused,
-        toolSelect
+        toolSelect,
+        blockSelect
     };
     private GameModes gameMode;
     private GameObject player;
     private MenuAction menuAction;
     private GameHUD gameHUD;
-    private GameManager worldManager;
+    private GameManager gameManager;
     private MenuTemplate pauseMenu;
     private MenuTemplate activeMenu;
     private ToolSelectMenu toolSelectMenu;
+    private BlockSelectMenu blockSelectMenu;
 
     public int lastMouseButton;
 
     void Start()
     {
-        worldManager = (GameManager)FindObjectOfType(typeof(GameManager));
-        player = worldManager.getPlayer();
+        gameManager = (GameManager)FindObjectOfType(typeof(GameManager));
+        player = gameManager.getPlayer();
         lastMouseButton = 0;
 
         escIsEnabled = true;
@@ -33,6 +35,14 @@ public class GameMenuManager : MonoBehaviour
         getPauseMenu();
         getGameHUD();
         getToolSelectMenu();
+        getBlockSelectMenu();
+    }
+
+    private BlockSelectMenu getBlockSelectMenu()
+    {
+        if (blockSelectMenu == null)
+            blockSelectMenu = new BlockSelectMenu(gameManager.shipModel.shipView);
+        return blockSelectMenu;
     }
 
     private ToolSelectMenu getToolSelectMenu()
@@ -80,6 +90,11 @@ public class GameMenuManager : MonoBehaviour
         mouseInputGoesToPlayer(false);
     }
 
+    private void setBlockSelect(){
+        gameMode = GameModes.blockSelect;
+        mouseInputGoesToPlayer(false);
+    }
+
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
@@ -112,6 +127,16 @@ public class GameMenuManager : MonoBehaviour
             setResume();
         }
 
+                if (Input.GetButton("Block Select"))
+        {
+            if (gameMode == GameModes.gameplay)
+                setBlockSelect();
+        }
+        else if (gameMode == GameModes.blockSelect)
+        {
+            setResume();
+        }
+
         if (!Screen.showCursor)
             Screen.lockCursor = true;
     }
@@ -129,6 +154,10 @@ public class GameMenuManager : MonoBehaviour
         }
         else if (gameMode == GameModes.toolSelect) {
             menuAction = toolSelectMenu.draw();
+        }
+        else if (gameMode == GameModes.blockSelect)
+        {
+            menuAction = blockSelectMenu.draw();
         }
 
         if (menuAction != null)

@@ -8,13 +8,13 @@ public class ShipModel : MonoBehaviour
 	public string blobName;
 	public Block[,,] blocks;
     public IntVector3 shipSize;
-    private ShipView sv;
+    public ShipView shipView;
 	
 	void Awake ()
 	{
         shipSize = new IntVector3(100, 100, 100);
         blocks=new Block[shipSize.x,shipSize.y,shipSize.z];
-        sv = new ShipView(this);
+        shipView = new ShipView(this);
 	}
 	
 	void Update ()
@@ -23,7 +23,7 @@ public class ShipModel : MonoBehaviour
 	
 	public void removeBlock (IntVector3 point)
 	{
-		if (! sv.isBlockOccupied (point)) {
+		if (! shipView.isBlockOccupied (point)) {
 			Debug.Log ("removeBlock got unoccupied request " + ZDebug.toString (point));
 			return;
 		}
@@ -36,11 +36,11 @@ public class ShipModel : MonoBehaviour
 	public void createBlock (int blockCode, IntVector3 point)
 	{
 		//Debug.Log ("create block: i: " + i + " j: " + j + " k: " + k);
-		if (! sv.isInsideArray (point)) {
+		if (! shipView.isInsideArray (point)) {
 			Debug.Log ("aborted createBlock. bad coordinates: " + ZDebug.toString (point));
 			return;
 		}
-        if (sv.isBlockOccupied(point))
+        if (shipView.isBlockOccupied(point))
         {
             Debug.Log("aborted createBlock. occupied coordinates: " + ZDebug.toString(point));
             return;
@@ -48,7 +48,7 @@ public class ShipModel : MonoBehaviour
 
 
         GameObject blockGO = Instantiate(ResourceLookup.getBlockPrefab(), point.getVector3(), Quaternion.identity) as GameObject;
-		BlockData blockData = ResourceLookup.getBlockDataByCode (blockCode);
+		BlockData blockData = BlockDataLookup.getBlockDataByCode (blockCode);
         Block block = blockGO.GetComponent<Block>();
         block.initialize (blockData, blockGO,point);
 		

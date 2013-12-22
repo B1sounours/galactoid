@@ -10,6 +10,7 @@ it also contains constants that are almost never changed.
 public class GameOptions
 {
 	public static bool guiFPS, guiReticule;
+    public static int[] placeBlockSlots;
 
     public enum toolModes
     {
@@ -35,6 +36,9 @@ public class GameOptions
         mouseTool = new toolModes[2];
         mouseTool[0] = toolModes.removeBlock;
         mouseTool[1] = toolModes.placeBlock;
+
+        //slots 1-9 and 0 for place block
+        placeBlockSlots = new int[10];
 	}
 	
 }

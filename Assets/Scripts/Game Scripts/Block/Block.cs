@@ -4,7 +4,6 @@ using System.Collections;
 public class Block : MonoBehaviour
 {
 	public BlockData blockData;
-	private int textureIndex;
     private IntVector3 position;
     private GameObject blockPrefab;
     private GameObject blockGameObject;
@@ -12,7 +11,6 @@ public class Block : MonoBehaviour
     public void initialize(BlockData blockData, GameObject blockGameObject, IntVector3 position)
 	{
         this.position = position;
-        textureIndex = 0;
 		setBlockData (blockData);
         this.blockGameObject = blockGameObject;
 		setName ();
@@ -34,7 +32,7 @@ public class Block : MonoBehaviour
 	private void setBlockData (BlockData blockData)
 	{
 		this.blockData = blockData;
-        renderer.material.mainTexture = blockData.textures[textureIndex];
+        renderer.material.mainTexture = blockData.texture;
 	}
 
     public void remove()

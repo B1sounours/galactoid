@@ -8,7 +8,9 @@ place store all "Assets/Resources" paths used by Unity
 public class ResourcePaths
 {
     public static string blockDataFolder;
+
     public static string blockTextures;
+
     public static string toolSelectBackground;
 
     public static string toolModePlace;
@@ -32,7 +34,9 @@ public class ResourcePaths
 
         //textures
         mainSplash = "Textures/main_splash";
+
         blockTextures = "Textures/block";
+
         toolSelectBackground = "Textures/gui/background1";
 
         toolModePlace = "Textures/gui/gear-hammer";

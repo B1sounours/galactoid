@@ -12,6 +12,20 @@ public class ResourceLookup : MonoBehaviour
 
     private static Hashtable toolModeTextures;
     private static Texture[] sideButtonTextures;
+    private static Texture emptySlotTexture;
+
+    static public Texture getSideButtonTexture(int side)
+    {
+        //side=0 is left, side=1 is right
+        if (sideButtonTextures == null)
+        {
+            sideButtonTextures = new Texture[2];
+            for (int i = 0; i < 2; i++)
+                sideButtonTextures[i] = Resources.Load(ResourcePaths.sideButtons[i]) as Texture;
+        }
+
+        return sideButtonTextures[side];
+    }
 
     static public Texture getToolModeTexture(GameOptions.toolModes toolMode)
     {
@@ -27,7 +41,7 @@ public class ResourceLookup : MonoBehaviour
 
             texture = Resources.Load(ResourcePaths.toolModeRepair) as Texture;
             toolModeTextures.Add(GameOptions.toolModes.repairBlock, texture);
-            
+
             texture = Resources.Load(ResourcePaths.toolModeScan) as Texture;
             toolModeTextures.Add(GameOptions.toolModes.scanBlock, texture);
         }

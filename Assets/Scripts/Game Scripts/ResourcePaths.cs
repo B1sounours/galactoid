@@ -10,6 +10,7 @@ public class ResourcePaths
     public static string blockDataFolder;
 
     public static string blockTextures;
+    public static string[] sideButtons;
 
     public static string toolSelectBackground;
 
@@ -34,6 +35,7 @@ public class ResourcePaths
 
         //textures
         mainSplash = "Textures/main_splash";
+        sideButtons = new string[2] { "Textures/gui/left_arrow", "Textures/gui/right_arrow" };
 
         blockTextures = "Textures/block";
 

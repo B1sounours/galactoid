@@ -36,7 +36,7 @@ public class MenuTemplate
 		
 		return newStyle;
 	}
-	
+
 	public static GUIStyle getLabelStyle (int fontDivisor, TextAnchor textAnchor, Color color)
 	{
 		GUIStyle newStyle = getLabelStyle (fontDivisor);

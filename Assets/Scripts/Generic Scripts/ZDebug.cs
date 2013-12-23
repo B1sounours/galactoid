@@ -36,9 +36,13 @@ public static class ZDebug
 	
 	public static void show (Square square)
 	{
-		Debug.Log (" x: " + square.x + " z: " + square.y + " width: " + square.width + " depth: " + square.height);
+		Debug.Log (" x: " + square.x + " y: " + square.y + " width: " + square.width + " height: " + square.height);
 	}
-	
+
+    public static void show(Rect rect)
+    {
+        Debug.Log(" x: " + rect.x + " y: " + rect.y + " width: " + rect.width + " height: " + rect.height);
+    }
 }
 
 

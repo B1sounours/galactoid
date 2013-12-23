@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class GameMenuManager : MonoBehaviour
+public class GuiManager : MonoBehaviour
 {
     private bool escIsEnabled;
     private enum GameModes
@@ -14,7 +14,7 @@ public class GameMenuManager : MonoBehaviour
     private GameModes gameMode;
     private GameObject player;
     private MenuAction menuAction;
-    private GameHUD gameHUD;
+    public GameHud gameHUD;
     private GameManager gameManager;
     private MenuTemplate pauseMenu;
     private MenuTemplate activeMenu;
@@ -33,9 +33,9 @@ public class GameMenuManager : MonoBehaviour
         setResume();
 
         getPauseMenu();
-        getGameHUD();
         getToolSelectMenu();
         getBlockSelectMenu();
+        getGameHUD();
     }
 
     private BlockSelectMenu getBlockSelectMenu()
@@ -52,10 +52,10 @@ public class GameMenuManager : MonoBehaviour
         return toolSelectMenu;
     }
 
-    private GameHUD getGameHUD()
+    public GameHud getGameHUD()
     {
         if (gameHUD == null)
-            gameHUD = new GameHUD();
+            gameHUD = new GameHud(getBlockSelectMenu());
         return gameHUD;
     }
 

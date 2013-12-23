@@ -8,44 +8,33 @@ public class BlockSelectMenu
     private Texture background;
     private GUIStyle normalStyle;
     private int blockDataIndex = 0;
+
+    private BlockStack mouseDownBlockStack;
+
+    private int slotPositions = 9;
     private float slotWidth;
+    private float slotHeight;
 
     private Rect backgroundRect;
     private GUILayoutOption[] slotGuiOptions;
+
+    public BlockStack[] selectedBlockStacks;
 
     public BlockSelectMenu(ShipView shipView)
     {
         this.shipView = shipView;
         background = Resources.Load(ResourcePaths.toolSelectBackground) as Texture;
-        normalStyle = MenuTemplate.getLabelStyle(60, TextAnchor.UpperCenter, Color.black);
+        normalStyle = MenuTemplate.getLabelStyle(40, TextAnchor.UpperCenter, Color.black);
 
         slotWidth = Screen.width / 12;
-        float slotHeight = slotWidth * 2;
+        slotHeight = slotWidth * 2;
 
-        float xSpace = slotWidth / 2;
         float ySpace = Screen.height / 2 - (float)(slotHeight * 1.2);
-        backgroundRect = new Rect(xSpace, ySpace, Screen.width - xSpace * 2, Screen.height - ySpace * 2);
+        backgroundRect = new Rect(0, ySpace, Screen.width, Screen.height - ySpace * 2);
 
-        slotGuiOptions = new GUILayoutOption[2] { GUILayout.Width(slotWidth), GUILayout.Height(slotHeight) };
-    }
-
-    private void drawClippedTexture(Texture texture, float textureX, float textureY, float textureWidth,
-        float textureHeight, float x, float y, float scale)
-    {
-        /*
-         * the box containing the piece of texture we want to draw is:
-         * (textureX,textureY) and (textureX+textureWidth,textureY+textureHeight)
-         * 
-         * x and y are screen coorindates
-         * 
-         * scale is how big to stretch the texture
-         * 
-         * Far from optimized, but it works.
-         */
-        GUI.BeginGroup(new Rect(x, y, textureWidth * scale, textureHeight * scale));
-        GUI.DrawTexture(new Rect(-textureX * scale, -textureY * scale, texture.width * scale, texture.height * scale), 
-            texture, ScaleMode.StretchToFill);
-        GUI.EndGroup();
+        slotGuiOptions = new GUILayoutOption[4] { GUILayout.Width(slotWidth), 
+            GUILayout.Height(slotHeight),GUILayout.ExpandHeight(true),GUILayout.ExpandWidth(true) };
+        selectedBlockStacks = new BlockStack[slotPositions];
     }
 
     public MenuAction draw()
@@ -56,32 +45,74 @@ public class BlockSelectMenu
         GUILayout.BeginArea(backgroundRect);
         GUILayout.BeginVertical();
         GUILayout.Label("Assign blocks to keys 1-9", normalStyle);
-        GUILayout.FlexibleSpace();
+
+        float slotScale = slotWidth / 16;
+        ArrayList blockStacks = getBlockStacksForSlots();
+        {
+            GUILayout.BeginHorizontal();
+            if (GUILayout.Button(ResourceLookup.getSideButtonTexture(0), slotGuiOptions))
+                scrollLeft();
+
+            if (blockStacks.Count == slotPositions)
+                GUILayout.FlexibleSpace();
+
+            BlockStack blockStack;
+            for (int i = 0; i < blockStacks.Count; i++)
+            {
+                GUILayout.Box("", slotGuiOptions);
+                if (blockStacks[i] == null)
+                    break;
+                blockStack = (BlockStack)blockStacks[i];
+                Rect rect = GUILayoutUtility.GetLastRect();
+                GuiFunctions.drawSlotTexture(blockStack.blockData.texture, rect.xMin, rect.yMin, slotScale);
+
+                if (Input.GetMouseButtonDown(0) && GuiFunctions.isMouseInGuiRect(rect))
+                    mouseDownBlockStack = blockStack;
+
+            }
+
+
+            GUILayout.FlexibleSpace();
+
+            if (GUILayout.Button(ResourceLookup.getSideButtonTexture(1), slotGuiOptions))
+                scrollRight();
+            GUILayout.EndHorizontal();
+        }
 
         {
             GUILayout.BeginHorizontal();
-            if (GUILayout.Button("<", slotGuiOptions))
-                scrollLeft();
             GUILayout.FlexibleSpace();
 
-            Rect rect = GUILayoutUtility.GetLastRect();
-            float scale=slotWidth/16;
-            foreach (BlockStack blockStack in getBlockStacksForSlots())
+            for (int i = 0; i < slotPositions; i++)
             {
-                drawClippedTexture(blockStack.blockData.texture,48,24,16,32,rect.xMin,rect.yMin,scale);
-                rect.xMin += slotWidth;
+                GUILayout.Box((i + 1).ToString(), slotGuiOptions);
+                Rect rect = GUILayoutUtility.GetLastRect();
+                if (selectedBlockStacks[i] != null)
+                {
+                    BlockStack blockStack = (BlockStack)selectedBlockStacks[i];
+                    GuiFunctions.drawSlotTexture(blockStack.blockData.texture, rect.xMin, rect.yMin, slotScale);
+                }
+                if (Input.GetMouseButtonUp(0) && mouseDownBlockStack != null && GuiFunctions.isMouseInGuiRect(rect))
+                {
+                    selectedBlockStacks[i] = mouseDownBlockStack;
+                    mouseDownBlockStack = null;
+                }
             }
 
-            if (GUILayout.Button(">", slotGuiOptions))
-                scrollRight();
-
+            GUILayout.FlexibleSpace();
             GUILayout.EndHorizontal();
         }
-        
 
         GUILayout.FlexibleSpace();
         GUILayout.EndVertical();
         GUILayout.EndArea();
+
+        if (mouseDownBlockStack != null)
+        {
+            GuiFunctions.drawSlotTexture(mouseDownBlockStack.blockData.texture, Input.mousePosition.x - slotWidth / 2, Screen.height - Input.mousePosition.y - slotHeight / 2, slotScale);
+            if (!Input.GetMouseButton(0) && Event.current.type == EventType.repaint)
+                mouseDownBlockStack = null;
+        }
 
         return menuAction;
     }
@@ -111,7 +142,7 @@ public class BlockSelectMenu
     {
         ArrayList inventory = shipView.getBlockInventory();
         int count = inventory.Count - blockDataIndex;
-        count = count > 9 ? 9 : count;
+        count = count > slotPositions ? slotPositions : count;
         return inventory.GetRange(blockDataIndex, count);
     }
 }

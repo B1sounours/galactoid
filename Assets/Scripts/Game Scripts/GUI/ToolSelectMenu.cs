@@ -14,9 +14,9 @@ public class ToolSelectMenu
     private GUILayoutOption[] mouseGuiOptions;
     private float toolIconSpacing;
 
-    private GameMenuManager gmm;
+    private GuiManager gmm;
 
-    public ToolSelectMenu(GameMenuManager gameMenuManager)
+    public ToolSelectMenu(GuiManager gameMenuManager)
     {
         background = Resources.Load(ResourcePaths.toolSelectBackground) as Texture;
         normalStyle = MenuTemplate.getLabelStyle(40, TextAnchor.UpperCenter, Color.black);

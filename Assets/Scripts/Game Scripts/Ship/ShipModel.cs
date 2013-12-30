@@ -1,64 +1,31 @@
 using UnityEngine;
 using System.Collections;
 
-//This class stores and manipulates all ship data
+//This class stores all ship data
 
-public class ShipModel : MonoBehaviour
+public class ShipModel
 {
-	public string blobName;
 	public Block[,,] blocks;
     public IntVector3 shipSize;
-    public ShipView shipView;
-	
-	void Awake ()
+    public ShipInfo shipInfo;
+
+    public ShipModel()
 	{
-        shipSize = new IntVector3(100, 100, 100);
+        shipSize = new IntVector3(GameConstants.maxShipDimension, GameConstants.maxShipDimension, GameConstants.maxShipDimension);
         blocks=new Block[shipSize.x,shipSize.y,shipSize.z];
-        shipView = new ShipView(this);
-	}
-	
-	void Update ()
-	{
+        shipInfo = new ShipInfo(this);
 	}
 	
 	public void removeBlock (IntVector3 point)
 	{
-		if (! shipView.isBlockOccupied (point)) {
-			Debug.Log ("removeBlock got unoccupied request " + ZDebug.toString (point));
-			return;
-		}
-
 		Block block = (Block)blocks [point.x, point.y, point.z];
-        block.remove();
 		blocks [point.x, point.y, point.z] = null;
 	}
 	
-	public void createBlock (int blockCode, IntVector3 point)
+	public void createBlock (Block block, BlockData blockData,IntVector3 position)
 	{
-		//Debug.Log ("create block: i: " + i + " j: " + j + " k: " + k);
-		if (! shipView.isInsideArray (point)) {
-			Debug.Log ("aborted createBlock. bad coordinates: " + ZDebug.toString (point));
-			return;
-		}
-        if (shipView.isBlockOccupied(point))
-        {
-            Debug.Log("aborted createBlock. occupied coordinates: " + ZDebug.toString(point));
-            return;
-        }
-
-
-        GameObject blockGO = Instantiate(ResourceLookup.getBlockPrefab(), point.getVector3(), Quaternion.identity) as GameObject;
-		BlockData blockData = BlockDataLookup.getBlockDataByCode (blockCode);
-        Block block = blockGO.GetComponent<Block>();
-        block.initialize (blockData, blockGO,point);
-		
-		if (blockData.isRotationRandom) {
-			blockGO.transform.eulerAngles = Angles.getRandom ();
-		} else {
-			blockGO.transform.eulerAngles = Angles.getFlat ();
-		}
-		blockGO.transform.parent = transform;
-		blocks [point.x, point.y, point.z] = block;
+        block.initialize(blockData, new BlockStatus(position));
+        blocks[position.x, position.y, position.z] = block;
 	}
 	
 }

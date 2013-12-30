@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-//this class is mostly for player inventory. it stores a quantity of blocks of the same blockdata and blockstatus
+//this class is for player inventory. it stores a quantity of blocks of the same blockdata and blockstatus
 
 public class BlockStack {
 

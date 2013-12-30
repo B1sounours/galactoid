@@ -14,11 +14,13 @@ public class GameManager : MonoBehaviour
     private GameHud gameHud;
 
     private Camera backgroundCamera;
-    public ShipModel shipModel;
+    public ShipController shipController;
+    public ShipInfo shipInfo;
 
     void Awake()
     {
-        shipModel = gameObject.AddComponent<ShipModel>();
+        shipController = new ShipController();
+        shipInfo = shipController.shipInfo;
         guiManager = gameObject.AddComponent<GuiManager>();
         gameObject.AddComponent<SkyboxManager>();
         getPlayer();
@@ -38,13 +40,13 @@ public class GameManager : MonoBehaviour
             Debug.Log("warning: requestPlaceBlock but selectedBlock is null");
             return;
         }
-        shipModel.createBlock(getGameHud().selectedBlockStack.blockData.blockCode, 
+        shipController.createBlock(getGameHud().selectedBlockStack.blockData.blockCode, 
             new IntVector3(position.x,position.y,position.z));
     }
 
     public void requestHarvestBlock(IntVector3 position)
     {
-        shipModel.removeBlock(position);
+        shipController.removeBlock(position);
     }
 
     private void debug1()
@@ -56,11 +58,11 @@ public class GameManager : MonoBehaviour
         int blockCode = Random.Range(1, 100);
         for (int i = 0; i < bSize; i++)
             for (int j = 0; j < bSize; j++)
-                shipModel.createBlock(blockCode+j/10, new IntVector3(i, 0, j));
+                shipController.createBlock(blockCode + j / 10, new IntVector3(i, 0, j));
         
         for (int i = 1; i < 3; i++)
             for (int j = 0; j < 120; j++)
-                shipModel.createBlock(j, new IntVector3((j%20)*2, i, (j/10)));
+                shipController.createBlock(j, new IntVector3((j % 20) * 2, i, (j / 10)));
         
     }
 

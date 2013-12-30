@@ -41,7 +41,7 @@ public class GuiManager : MonoBehaviour
     private BlockSelectMenu getBlockSelectMenu()
     {
         if (blockSelectMenu == null)
-            blockSelectMenu = new BlockSelectMenu(gameManager.shipModel.shipView);
+            blockSelectMenu = new BlockSelectMenu(gameManager.shipInfo);
         return blockSelectMenu;
     }
 

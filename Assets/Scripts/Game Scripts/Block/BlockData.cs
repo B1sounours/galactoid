@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-//this class stores block information that will never change during gameplay.
+//this class stores all block information that does not change during gameplay.
 
 public class BlockData
 {

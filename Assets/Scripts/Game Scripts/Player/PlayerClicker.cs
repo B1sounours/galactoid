@@ -23,7 +23,7 @@ public class PlayerClicker : MonoBehaviour
             if (Input.GetMouseButtonDown(mouseButton) || (Input.GetMouseButton(mouseButton) && timeSinceLastClick > 0.3))
             {
                 timeSinceLastClick = 0;
-                float range = 100;
+                float range = 10;
                 Vector3 pos = cameraTransform.position;
                 RaycastHit rayCastHit = new RaycastHit();
                 if (Physics.Linecast(pos, pos + cameraTransform.forward * range, out rayCastHit, 1))

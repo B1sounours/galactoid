@@ -1,18 +1,19 @@
 using UnityEngine;
 using System.Collections;
 
+//this class changes its parent block gameobject. it is its only component.
+
 public class Block : MonoBehaviour
 {
 	public BlockData blockData;
-    private IntVector3 position;
+    public BlockStatus blockStatus;
     private GameObject blockPrefab;
     private GameObject blockGameObject;
 
-    public void initialize(BlockData blockData, GameObject blockGameObject, IntVector3 position)
+    public void initialize(BlockData blockData, BlockStatus blockStatus)
 	{
-        this.position = position;
+        this.blockStatus = blockStatus;
 		setBlockData (blockData);
-        this.blockGameObject = blockGameObject;
 		setName ();
 	}
 
@@ -26,7 +27,7 @@ public class Block : MonoBehaviour
 
 	public void setName ()
 	{
-        this.name = "Block (" + position.x + "," + position.y + "," + position.z + ")";
+        this.name = "Block (" + blockStatus.position.x + "," + blockStatus.position.y + "," + blockStatus.position.z + ")";
 	}
 	
 	private void setBlockData (BlockData blockData)
@@ -34,10 +35,5 @@ public class Block : MonoBehaviour
 		this.blockData = blockData;
         renderer.material.mainTexture = blockData.texture;
 	}
-
-    public void remove()
-    {
-        Destroy(blockGameObject);
-    }
 }
 

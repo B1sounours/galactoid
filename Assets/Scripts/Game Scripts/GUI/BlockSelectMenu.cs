@@ -4,7 +4,7 @@ using System;
 
 public class BlockSelectMenu
 {
-    private ShipView shipView;
+    private ShipInfo shipInfo;
     private Texture background;
     private GUIStyle normalStyle;
     private int blockDataIndex = 0;
@@ -20,9 +20,9 @@ public class BlockSelectMenu
 
     public BlockStack[] selectedBlockStacks;
 
-    public BlockSelectMenu(ShipView shipView)
+    public BlockSelectMenu(ShipInfo shipInfo)
     {
-        this.shipView = shipView;
+        this.shipInfo = shipInfo;
         background = Resources.Load(ResourcePaths.toolSelectBackground) as Texture;
         normalStyle = MenuTemplate.getLabelStyle(40, TextAnchor.UpperCenter, Color.black);
 
@@ -131,7 +131,7 @@ public class BlockSelectMenu
 
     private void checkBlockDataIndex()
     {
-        ArrayList inventory = shipView.getBlockInventory();
+        ArrayList inventory = shipInfo.getBlockInventory();
         if (blockDataIndex < 0)
             blockDataIndex = inventory.Count - 1;
         if (blockDataIndex >= inventory.Count)
@@ -140,7 +140,7 @@ public class BlockSelectMenu
 
     private ArrayList getBlockStacksForSlots()
     {
-        ArrayList inventory = shipView.getBlockInventory();
+        ArrayList inventory = shipInfo.getBlockInventory();
         int count = inventory.Count - blockDataIndex;
         count = count > slotPositions ? slotPositions : count;
         return inventory.GetRange(blockDataIndex, count);

@@ -39,7 +39,7 @@ public static class GuiFunctions
          * 
          * x and y are screen coorindates
          * 
-         * scale is how big to stretch the texture
+         * scale is how big to stretch the texture where 1.0 is no stretch
          */
         GUI.BeginGroup(new Rect(x, y, textureWidth * scale, textureHeight * scale));
         GUI.DrawTexture(new Rect(-textureX * scale, -textureY * scale, texture.width * scale, texture.height * scale),
@@ -64,7 +64,7 @@ public static class GuiFunctions
     {
         if (titleStyle == null)
         {
-            titleStyle = getLabelStyle(40);
+            titleStyle = getLabelStyle(48);
             titleStyle.alignment = TextAnchor.UpperCenter;
         }
         return titleStyle;
@@ -74,7 +74,7 @@ public static class GuiFunctions
     {
         if (subtitleStyle == null)
         {
-            subtitleStyle = getLabelStyle(28);
+            subtitleStyle = getLabelStyle(32);
             subtitleStyle.alignment = TextAnchor.UpperCenter;
         }
         return subtitleStyle;
@@ -84,7 +84,7 @@ public static class GuiFunctions
     {
         if (buttonStyle == null)
         {
-            buttonStyle = getLabelStyle(18);
+            buttonStyle = getLabelStyle(24);
             buttonStyle.alignment = TextAnchor.UpperLeft;
             buttonStyle.normal.textColor = new Color(230, 230, 255);
         }
@@ -95,7 +95,7 @@ public static class GuiFunctions
     {
         if (normalStyle == null)
         {
-            normalStyle = getLabelStyle(18);
+            normalStyle = getLabelStyle(24);
             normalStyle.alignment = TextAnchor.UpperCenter;
             normalStyle.normal.textColor = color;
         }

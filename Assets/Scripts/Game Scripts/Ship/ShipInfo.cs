@@ -29,7 +29,7 @@ public class ShipInfo
     {
         //returns an arraylist of all blockstacks available for the player to place
         ArrayList inventory = new ArrayList();
-        for (int i = 0; i < 100; i++){
+        for (int i = 0; i < 112; i++){
             BlockData bd = BlockDataLookup.getBlockDataByCode(i);
             inventory.Add(new BlockStack(bd,10));
         }

@@ -1,20 +1,26 @@
 using UnityEngine;
 using System.Collections;
 
-//this class stores all block information that does not change during gameplay.
+//this is a container for all non-unity data associated to one block (no gameobjects)
 
+[System.Serializable]
 public class BlockData
 {
-    public string name;
+    public string textureFilename;
 	public int blockCode = 0;
-	public Texture texture;
+    public IntVector3 position;
 
     public bool isRotationRandom = false;
 
-    public BlockData(string name, int blockCode, Texture texture)
+    public BlockData(string textureFilename, int blockCode, IntVector3 position)
     {
-        this.name = name;
+        this.textureFilename = textureFilename;
         this.blockCode = blockCode;
-        this.texture = texture;
+        this.position = position;
+    }
+
+    public BlockData getCopy()
+    {
+        return new BlockData(textureFilename, blockCode, new IntVector3(position.x,position.y,position.z));
     }
 }

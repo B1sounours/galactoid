@@ -24,7 +24,7 @@ public class BlockSelectMenu
     {
         this.shipInfo = shipInfo;
         background = Resources.Load(ResourcePaths.toolSelectBackground) as Texture;
-        normalStyle = MenuTemplate.getLabelStyle(40, TextAnchor.UpperCenter, Color.black);
+        normalStyle = GuiFunctions.getNormalStyle(Color.black);
 
         slotWidth = Screen.width / 12;
         slotHeight = slotWidth * 2;
@@ -37,9 +37,9 @@ public class BlockSelectMenu
         selectedBlockStacks = new BlockStack[slotPositions];
     }
 
-    public MenuAction draw()
+    public MenuActions draw()
     {
-        MenuAction menuAction = null;
+        MenuActions menuAction = MenuActions.none;
         GUI.DrawTexture(backgroundRect, background, ScaleMode.ScaleAndCrop, false, 0);
 
         GUILayout.BeginArea(backgroundRect);
@@ -64,7 +64,7 @@ public class BlockSelectMenu
                     break;
                 blockStack = (BlockStack)blockStacks[i];
                 Rect rect = GUILayoutUtility.GetLastRect();
-                GuiFunctions.drawSlotTexture(blockStack.blockData.texture, rect.xMin, rect.yMin, slotScale);
+                GuiFunctions.drawSlotTexture(blockStack.blockTexture, rect.xMin, rect.yMin, slotScale);
 
                 if (Input.GetMouseButtonDown(0) && GuiFunctions.isMouseInGuiRect(rect))
                     mouseDownBlockStack = blockStack;
@@ -90,7 +90,7 @@ public class BlockSelectMenu
                 if (selectedBlockStacks[i] != null)
                 {
                     BlockStack blockStack = (BlockStack)selectedBlockStacks[i];
-                    GuiFunctions.drawSlotTexture(blockStack.blockData.texture, rect.xMin, rect.yMin, slotScale);
+                    GuiFunctions.drawSlotTexture(blockStack.blockTexture, rect.xMin, rect.yMin, slotScale);
                 }
                 if (Input.GetMouseButtonUp(0) && mouseDownBlockStack != null && GuiFunctions.isMouseInGuiRect(rect))
                 {
@@ -109,7 +109,7 @@ public class BlockSelectMenu
 
         if (mouseDownBlockStack != null)
         {
-            GuiFunctions.drawSlotTexture(mouseDownBlockStack.blockData.texture, Input.mousePosition.x - slotWidth / 2, Screen.height - Input.mousePosition.y - slotHeight / 2, slotScale);
+            GuiFunctions.drawSlotTexture(mouseDownBlockStack.blockTexture, Input.mousePosition.x - slotWidth / 2, Screen.height - Input.mousePosition.y - slotHeight / 2, slotScale);
             if (!Input.GetMouseButton(0) && Event.current.type == EventType.repaint)
                 mouseDownBlockStack = null;
         }

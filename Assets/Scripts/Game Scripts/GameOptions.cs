@@ -12,6 +12,10 @@ public class GameOptions
 	public static bool guiFPS, guiReticule;
     public static int[] placeBlockSlots;
 
+    //save and load data
+    public static string gameSaveLoadKey="game1";
+    public static bool loadSavedGame=false;
+
     public enum toolModes
     {
         placeBlock,
@@ -25,6 +29,11 @@ public class GameOptions
 	{
 		setDefaults ();
 	}
+
+    public static string getSaveLoadPath()
+    {
+        return Application.persistentDataPath + "/" + gameSaveLoadKey;
+    }
 	
 	static void setDefaults ()
 	{

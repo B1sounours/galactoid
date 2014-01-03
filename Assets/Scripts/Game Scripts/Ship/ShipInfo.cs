@@ -3,6 +3,7 @@ using System.Collections;
 
 //This class provides information and analysis about data found in a shipmodel
 
+[System.Serializable]
 public class ShipInfo
 {
     ShipModel shipModel;
@@ -14,7 +15,7 @@ public class ShipInfo
 
     public bool isBlockOccupied(IntVector3 point)
     {
-        return !(shipModel.blocks[point.x, point.y, point.z] == null);
+        return !(shipModel.blockDatas[point.x, point.y, point.z] == null);
     }
 
     public bool isInsideArray(IntVector3 point)
@@ -30,8 +31,7 @@ public class ShipInfo
         ArrayList inventory = new ArrayList();
         for (int i = 0; i < 100; i++){
             BlockData bd = BlockDataLookup.getBlockDataByCode(i);
-            BlockStatus bs = new BlockStatus();
-            inventory.Add(new BlockStack(bd,bs,10));
+            inventory.Add(new BlockStack(bd,10));
         }
 
         return inventory;

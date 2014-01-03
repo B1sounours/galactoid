@@ -12,7 +12,7 @@ public class GameHud
 
     public GameHud(BlockSelectMenu blockSelectMenu)
     {
-        normalStyle = MenuTemplate.getLabelStyle(30, TextAnchor.MiddleCenter, Color.white);
+        normalStyle = GuiFunctions.getNormalStyle(Color.white);
         this.blockSelectMenu = blockSelectMenu;
 
         float slotWidth = Screen.width / 20;
@@ -57,7 +57,7 @@ public class GameHud
             selectedBlockStack = (BlockStack)blockSelectMenu.selectedBlockStacks[blockSelectKey - 1];
 
         if (selectedBlockStack != null)
-            GuiFunctions.drawSlotTexture(selectedBlockStack.blockData.texture, selectedBlockPosition.x,
+            GuiFunctions.drawSlotTexture(selectedBlockStack.blockTexture, selectedBlockPosition.x,
                 selectedBlockPosition.y, selectedBlockScale);
     }
 

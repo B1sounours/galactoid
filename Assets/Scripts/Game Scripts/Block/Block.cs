@@ -1,39 +1,27 @@
 using UnityEngine;
 using System.Collections;
 
-//this class changes its parent block gameobject. it is its only component.
+//this is the only component for a block game object. it allows ship3DView to make visual changes to the block.
 
 public class Block : MonoBehaviour
 {
 	public BlockData blockData;
-    public BlockStatus blockStatus;
-    private GameObject blockPrefab;
-    private GameObject blockGameObject;
 
-    public void initialize(BlockData blockData, BlockStatus blockStatus)
+    public void initialize(BlockData blockData)
 	{
-        this.blockStatus = blockStatus;
 		setBlockData (blockData);
 		setName ();
 	}
 
-    public GameObject getBlockPrefab()
-    {
-        if (blockPrefab == null)
-            blockPrefab = Resources.Load(ResourcePaths.blockPrefab) as GameObject;
-
-        return blockPrefab;
-    }
-
 	public void setName ()
 	{
-        this.name = "Block (" + blockStatus.position.x + "," + blockStatus.position.y + "," + blockStatus.position.z + ")";
+        this.name = "Block (" + blockData.position.x + "," + blockData.position.y + "," + blockData.position.z + ")";
 	}
 	
 	private void setBlockData (BlockData blockData)
 	{
 		this.blockData = blockData;
-        renderer.material.mainTexture = blockData.texture;
+        renderer.material.mainTexture = ResourceLookup.getBlockTexture(blockData.textureFilename);
 	}
 }
 

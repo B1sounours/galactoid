@@ -1,31 +1,31 @@
 using UnityEngine;
 using System.Collections;
 
-//This class stores all ship data
+//This class stores all ship data. All data is abstract, it makes no references to gameobjects.
 
+[System.Serializable]
 public class ShipModel
 {
-	public Block[,,] blocks;
+	public BlockData[,,] blockDatas;
     public IntVector3 shipSize;
-    public ShipInfo shipInfo;
+    private ShipInfo shipInfo;
 
     public ShipModel()
 	{
         shipSize = new IntVector3(GameConstants.maxShipDimension, GameConstants.maxShipDimension, GameConstants.maxShipDimension);
-        blocks=new Block[shipSize.x,shipSize.y,shipSize.z];
+        blockDatas = new BlockData[shipSize.x, shipSize.y, shipSize.z];
         shipInfo = new ShipInfo(this);
 	}
 	
 	public void removeBlock (IntVector3 point)
 	{
-		Block block = (Block)blocks [point.x, point.y, point.z];
-		blocks [point.x, point.y, point.z] = null;
+        blockDatas[point.x, point.y, point.z] = null;
 	}
 	
-	public void createBlock (Block block, BlockData blockData,IntVector3 position)
+	public void createBlock (BlockData blockData, IntVector3 position)
 	{
-        block.initialize(blockData, new BlockStatus(position));
-        blocks[position.x, position.y, position.z] = block;
+        blockData.position = new IntVector3(position.x, position.y, position.z) ;
+        blockDatas[position.x, position.y, position.z] = blockData;
 	}
 	
 }

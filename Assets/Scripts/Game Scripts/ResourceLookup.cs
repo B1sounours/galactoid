@@ -1,18 +1,36 @@
 using UnityEngine;
 using System.Collections;
 
+//using System.IO;
 //stores all Resources.LoadAll results for later use to avoid multiple initialization.
 
 public class ResourceLookup : MonoBehaviour
 {
     public static ArrayList blockDatas;
     private static ArrayList skyboxes;
+    private static Hashtable blockTextures;
     private static GameObject blockPrefab;
     private static GameObject planePrefab;
 
     private static Hashtable toolModeTextures;
     private static Texture[] sideButtonTextures;
     private static Texture emptySlotTexture;
+
+    static public Texture getBlockTexture(string filename)
+    {
+        //optimization: forward slash is hard coded. eek
+        if (blockTextures == null)
+            blockTextures = new Hashtable();
+
+        if (!blockTextures.Contains(filename))
+        {
+            string path =ResourcePaths.blockTextures +"/"+filename;
+            //Debug.Log("path: " + path);
+            blockTextures[filename] = Resources.Load(path) as Texture;
+        }
+
+        return (Texture)blockTextures[filename];
+    }
 
     static public Texture getSideButtonTexture(int side)
     {

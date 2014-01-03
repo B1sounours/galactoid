@@ -5,7 +5,6 @@ using System;
 public class ToolSelectMenu
 {
     private Texture background;
-    private GUIStyle normalStyle;
     private GUIStyle tipStyle;
 
     private Rect backgroundRect;
@@ -19,8 +18,8 @@ public class ToolSelectMenu
     public ToolSelectMenu(GuiManager gameMenuManager)
     {
         background = Resources.Load(ResourcePaths.toolSelectBackground) as Texture;
-        normalStyle = MenuTemplate.getLabelStyle(40, TextAnchor.UpperCenter, Color.black);
-        tipStyle = MenuTemplate.getLabelStyle(60, TextAnchor.UpperCenter, Color.black);
+        tipStyle = GuiFunctions.getTipStyle();
+        
         gmm = gameMenuManager;
 
         int xSpace = Screen.width / 6;
@@ -37,15 +36,15 @@ public class ToolSelectMenu
         mouseGuiOptions = new GUILayoutOption[2] { GUILayout.Width(mouseIconSize), GUILayout.Height(mouseIconSize) };
     }
 
-    public MenuAction draw()
+    public MenuActions draw()
     {
-        MenuAction menuAction = null;
+        MenuActions menuAction = MenuActions.none;
         GUI.DrawTexture(backgroundRect, background, ScaleMode.ScaleAndCrop, false, 0);
 
         GUILayout.BeginArea(guiRect);
         GUILayout.BeginVertical();
         {
-            GUILayout.Label("Set left and right mouse buttons", normalStyle);
+            GUILayout.Label("Set left and right mouse buttons", GuiFunctions.getNormalStyle(Color.black));
 
             GUILayout.BeginHorizontal();
             foreach (GameOptions.toolModes toolMode in Enum.GetValues(typeof(GameOptions.toolModes)))

@@ -6,13 +6,13 @@ using System.Collections;
 public class BlockStack {
 
     public BlockData blockData;
-    public BlockStatus blockStatus;
     public float quantity;
+    public Texture blockTexture;
 
-    public BlockStack(BlockData blockData, BlockStatus blockStatus, float quantity)
+    public BlockStack(BlockData blockData, float quantity)
     {
         this.blockData = blockData;
-        this.blockStatus = blockStatus;
         this.quantity = quantity;
+        blockTexture = ResourceLookup.getBlockTexture(blockData.textureFilename);
     }
 }

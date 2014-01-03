@@ -9,15 +9,16 @@ public class ShipController
     public Ship3DView ship3DView;
     public ShipInfo shipInfo;
 
-    public ShipController()
+    public ShipController(ShipModel shipModel)
     {
-        shipModel = new ShipModel();
+        this.shipModel = shipModel;
         shipInfo = new ShipInfo(shipModel);
 
         GameObject go = new GameObject("Ship3DView");
         ship3DView = go.AddComponent<Ship3DView>();
 
         ship3DView.shipModel = shipModel;
+        ship3DView.initializeAllBlocks();
     }
 
 
@@ -46,9 +47,9 @@ public class ShipController
             return;
         }
 
-        BlockData blockData = BlockDataLookup.getBlockDataByCode(blockCode);
+        BlockData blockData = BlockDataLookup.getBlockDataByCode(blockCode).getCopy();
         Block block = ship3DView.createBlock(blockData, position);
-        shipModel.createBlock(block, blockData, position);
+        shipModel.createBlock(blockData, position);
     }
 
 

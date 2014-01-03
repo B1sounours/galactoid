@@ -9,10 +9,10 @@ public static class BlockDataLookup
         blockDatas=new Hashtable();
 
         int blockCode = 0;
+        //optimization: this resource load really only needs the paths of the texture
         foreach (Texture2D texture in Resources.LoadAll(ResourcePaths.blockTextures,typeof(Texture2D)))
         {
-            BlockData blockData=new BlockData(texture.name,blockCode,texture);
-
+            BlockData blockData=new BlockData(texture.name,blockCode,IntVector3.zero);
             blockDatas.Add(blockCode, blockData);
             blockCode++;
         }
@@ -20,6 +20,7 @@ public static class BlockDataLookup
 
     static public BlockData getBlockDataByCode(int blockCode)
     {
+        //warning: make copies of the blockdata returned here if you want to make changes.
         if (blockDatas == null)
             setBlockDatas();
 

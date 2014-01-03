@@ -13,11 +13,10 @@ public class GuiManager : MonoBehaviour
     };
     private GameModes gameMode;
     private GameObject player;
-    private MenuAction menuAction;
+    private MenuActions menuAction;
     public GameHud gameHUD;
     private GameManager gameManager;
-    private MenuTemplate pauseMenu;
-    private MenuTemplate activeMenu;
+    private PauseMenu pauseMenu;
     private ToolSelectMenu toolSelectMenu;
     private BlockSelectMenu blockSelectMenu;
 
@@ -59,17 +58,12 @@ public class GuiManager : MonoBehaviour
         return gameHUD;
     }
 
-    private MenuTemplate getPauseMenu()
+    private PauseMenu getPauseMenu()
     {
         if (pauseMenu != null)
             return pauseMenu;
 
-        pauseMenu = new MenuTemplate("pause");
-        pauseMenu.setTitle();
-        pauseMenu.addButton("Resume");
-        pauseMenu.addButton("Main Menu");
-        pauseMenu.addButton("Exit");
-
+        pauseMenu = new PauseMenu();
         return pauseMenu;
     }
 
@@ -85,12 +79,14 @@ public class GuiManager : MonoBehaviour
         setGameState(true);
     }
 
-    private void setToolSelect(){
+    private void setToolSelect()
+    {
         gameMode = GameModes.toolSelect;
         mouseInputGoesToPlayer(false);
     }
 
-    private void setBlockSelect(){
+    private void setBlockSelect()
+    {
         gameMode = GameModes.blockSelect;
         mouseInputGoesToPlayer(false);
     }
@@ -109,7 +105,7 @@ public class GuiManager : MonoBehaviour
         {
             if (gameMode == GameModes.paused)
             {
-                menuAction = new MenuAction("", "Resume");
+                menuAction = MenuActions.resumeGame;
             }
             else if (gameMode == GameModes.gameplay)
             {
@@ -127,7 +123,7 @@ public class GuiManager : MonoBehaviour
             setResume();
         }
 
-                if (Input.GetButton("Block Select"))
+        if (Input.GetButton("Block Select"))
         {
             if (gameMode == GameModes.gameplay)
                 setBlockSelect();
@@ -145,14 +141,15 @@ public class GuiManager : MonoBehaviour
     {
         if (gameMode == GameModes.gameplay)
         {
-            menuAction = null;
+            menuAction = MenuActions.none;
             gameHUD.draw();
         }
         else if (gameMode == GameModes.paused)
         {
             menuAction = pauseMenu.draw();
         }
-        else if (gameMode == GameModes.toolSelect) {
+        else if (gameMode == GameModes.toolSelect)
+        {
             menuAction = toolSelectMenu.draw();
         }
         else if (gameMode == GameModes.blockSelect)
@@ -181,26 +178,13 @@ public class GuiManager : MonoBehaviour
 
     public void updateMenu()
     {
-        //this is how other classes communicate menu events to the gui manager
-        //Debug.Log (menuAction.menuName + ": " + menuAction.menuCommand);
-
-        if (menuAction.menuCommand == "Resume")
-        {
+        if (menuAction == MenuActions.resumeGame)
             setResume();
-            return;
-        }
 
-        if (menuAction.menuName == "pause")
+        if (menuAction == MenuActions.gotoMainMenu)
         {
-            switch (menuAction.menuCommand)
-            {
-                case "Main Menu":
-                    Application.LoadLevel("Start Menu");
-                    break;
-                case "Exit":
-                    Application.Quit();
-                    break;
-            }
+            gameManager.saveGame();
+            Application.LoadLevel("Main Menu");
         }
     }
 }

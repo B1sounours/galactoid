@@ -90,15 +90,17 @@ public class GameManager : MonoBehaviour
     private void setDebugPlatform()
     {
         int bSize = 40;
+        int yMin = 1;
         int blockCode = UnityEngine.Random.Range(1, 100);
         for (int i = 0; i < bSize; i++)
             for (int j = 0; j < bSize; j++)
-                shipController.createBlock(blockCode + j / 10, new IntVector3(i, 0, j));
-        
+                shipController.createBlock(blockCode + j / 10, new IntVector3(i, yMin, j));
 
-        for (int i = 1; i < 3; i++)
-            for (int j = 0; j < 112; j++)
-                shipController.createBlock(j, new IntVector3((j % 20) * 2, i, (j / 10)));
+        for (int i = 0; i < 112; i++)
+            shipController.createBlock(i, new IntVector3(i / 6, yMin + 1 + i % 6, 0));
+
+        GameObject prefab = Resources.Load("starport_floor") as GameObject;
+        Instantiate(prefab);
 
     }
 

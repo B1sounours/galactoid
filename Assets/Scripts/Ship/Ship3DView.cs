@@ -45,6 +45,7 @@ public class Ship3DView : MonoBehaviour
         GameObject blockGO = Instantiate(ResourceLookup.getBlockPrefab(), position.getVector3(), Quaternion.identity) as GameObject;
         blockGO.transform.parent = blockContainer.transform;
         Block block = blockGO.GetComponent<Block>();
+        blockData.position = position;
         block.initialize(blockData);
 
         if (blockData.isRotationRandom)

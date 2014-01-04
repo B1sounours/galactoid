@@ -5,23 +5,23 @@ using System.Collections;
 
 public class Block : MonoBehaviour
 {
-	public BlockData blockData;
+    public BlockData blockData;
 
     public void initialize(BlockData blockData)
-	{
-		setBlockData (blockData);
-		setName ();
-	}
+    {
+        setBlockData(blockData);
+        setName();
+    }
 
-	public void setName ()
-	{
+    public void setName()
+    {
         this.name = "Block (" + blockData.position.x + "," + blockData.position.y + "," + blockData.position.z + ")";
-	}
-	
-	private void setBlockData (BlockData blockData)
-	{
-		this.blockData = blockData;
+    }
+
+    private void setBlockData(BlockData blockData)
+    {
+        this.blockData = blockData;
         renderer.material.mainTexture = ResourceLookup.getBlockTexture(blockData.textureFilename);
-	}
+    }
 }
 

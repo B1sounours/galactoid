@@ -24,7 +24,6 @@ public static class PlayerGenerator
 		mainCamera.cullingMask = ~(1 << 9);
 		mainCamera.depth = 2;
 		mainCamera.clearFlags = CameraClearFlags.Nothing;
-		//mainCameraGO.AddComponent<GUILayer> ();
 	}
 	
 	private static void setSpaceCamera ()
@@ -44,7 +43,7 @@ public static class PlayerGenerator
 	{
 		CharacterController cc = player.AddComponent<CharacterController> ();
 		cc.radius = 0.4f;
-		cc.height = 1.8f;
+		cc.height = 2.8f;
 		cc.stepOffset = 0.4f;
 	}
 

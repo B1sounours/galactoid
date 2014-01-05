@@ -21,8 +21,8 @@ public class ShipInfo
     public bool isInsideArray(IntVector3 point)
     {
         return ((point.x >= 0 && point.x < shipModel.shipSize.x) &&
-            (point.x >= 0 && point.y < shipModel.shipSize.y) &&
-            (point.x >= 0 && point.z < shipModel.shipSize.z));
+            (point.y >= 0 && point.y < shipModel.shipSize.y) &&
+            (point.z >= 0 && point.z < shipModel.shipSize.z));
     }
 
     public ArrayList getBlockInventory()

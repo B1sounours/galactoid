@@ -46,7 +46,7 @@ public class ShipController
             Debug.Log("aborted createBlock. occupied coordinates: " + ZDebug.toString(position));
             return;
         }
-
+        
         BlockData blockData = BlockDataLookup.getBlockDataByCode(blockCode).getCopy();
         Block block = ship3DView.createBlock(blockData, position);
         shipModel.createBlock(blockData, position);

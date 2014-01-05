@@ -13,17 +13,16 @@ public class ResourcePaths
     public static string[] sideButtons;
 
     public static string toolSelectBackground;
-
-    public static string toolModePlace;
-    public static string toolModeRemove;
-    public static string toolModeRepair;
-    public static string toolModeScan;
+    public static string toolModePlace, toolModeRemove, toolModeRepair, toolModeScan;
 
     public static string skyboxFolder;
-    public static string blockPrefab;
-    public static string planePrefab;
     public static string mainSplash;
     public static string mainFont;
+
+    public static string blockPrefab;
+    public static string planePrefab;
+
+    public static string starportWallPrefab, starportFloorPrefab;
 
     static ResourcePaths()
     {
@@ -32,6 +31,8 @@ public class ResourcePaths
         skyboxFolder = "Prefabs/skybox";
         planePrefab = "Prefabs/skyboxPlane";
         blockPrefab = "Prefabs/block";
+        starportFloorPrefab = "Prefabs/Starport/floor";
+        starportWallPrefab = "Prefabs/Starport/wall";
 
         //textures
         mainSplash = "Textures/main_splash";

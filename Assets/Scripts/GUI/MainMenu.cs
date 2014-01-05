@@ -146,7 +146,7 @@ public class MainMenu : MonoBehaviour
         if (menuAction == MenuActions.loadGame)
         {
             GameOptions.loadSavedGame = true;
-            Application.LoadLevel("Game World");
+            Application.LoadLevel("Starport");
         }
         if (menuAction == MenuActions.newGame)
         {
@@ -156,7 +156,7 @@ public class MainMenu : MonoBehaviour
         if (menuAction == MenuActions.submitNewGame)
         {
             GameOptions.loadSavedGame = false;
-            Application.LoadLevel("Game World");
+            Application.LoadLevel("Starport");
         }
 
         menuAction = MenuActions.none;

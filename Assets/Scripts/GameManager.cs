@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     private GameObject player;
     private GameObject blockPrefab;
     private GuiManager guiManager;
+    private Starport3DView starport3DView;
     private GameHud gameHud;
 
     private Camera backgroundCamera;
@@ -32,12 +33,13 @@ public class GameManager : MonoBehaviour
         else
         {
             shipController = new ShipController(new ShipModel());
-            setDebugPlatform();
+            //setDebugPlatform();
         }
 
         centerPlayer();
         shipInfo = shipController.shipInfo;
         guiManager = gameObject.AddComponent<GuiManager>();
+        createStarport();
         gameObject.AddComponent<SkyboxManager>();
         getPlayer();
     }
@@ -45,6 +47,16 @@ public class GameManager : MonoBehaviour
     GameHud getGameHud()
     {
         return guiManager.getGameHUD();
+    }
+
+    private void createStarport()
+    {
+        shipController.createBlock(20,new IntVector3 (0,0,0));
+
+        GameObject containerGameobject = new GameObject("Starport");
+        starport3DView = gameObject.AddComponent<Starport3DView>();
+        //starport3DView.genStarport(GameConstants.maxShipDimension, containerGameobject);
+        starport3DView.createStartport(GameConstants.maxShipDimension, containerGameobject);
     }
 
     public void centerPlayer()
@@ -90,17 +102,14 @@ public class GameManager : MonoBehaviour
     private void setDebugPlatform()
     {
         int bSize = 40;
-        int yMin = 1;
         int blockCode = UnityEngine.Random.Range(1, 100);
+        
         for (int i = 0; i < bSize; i++)
             for (int j = 0; j < bSize; j++)
-                shipController.createBlock(blockCode + j / 10, new IntVector3(i, yMin, j));
-
+                shipController.createBlock(blockCode + j / 10, new IntVector3(i, 0, j));
+        
         for (int i = 0; i < 112; i++)
-            shipController.createBlock(i, new IntVector3(i / 6, yMin + 1 + i % 6, 0));
-
-        GameObject prefab = Resources.Load("starport_floor") as GameObject;
-        Instantiate(prefab);
+            shipController.createBlock(i, new IntVector3(i / 6, 1 + i % 6, 0));
 
     }
 

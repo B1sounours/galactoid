@@ -23,7 +23,12 @@ public static class ZDebug
 	{
 		Debug.Log (" x: " + vec.x + " y: " + vec.y);
 	}
-	
+
+    public static void show(Vector3 vec)
+    {
+        Debug.Log(" x: " + vec.x + " y: " + vec.y + " z: " + vec.z);
+    }
+
 	public static void show (IntVector2 vec)
 	{
 		Debug.Log (toString (vec));

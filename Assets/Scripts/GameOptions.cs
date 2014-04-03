@@ -11,6 +11,7 @@ public class GameOptions
 {
 	public static bool guiFPS, guiReticule;
     public static int[] placeBlockSlots;
+    public static int targetFramerate=60;
 
     //save and load data
     public static string gameSaveLoadKey="game1";

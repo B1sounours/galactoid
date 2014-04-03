@@ -24,6 +24,11 @@ public class ShipController
 
     public void removeBlock(IntVector3 point)
     {
+        if (!shipInfo.isInsideArray(point))
+        {
+            Debug.Log("removeBlock got request outside array " + ZDebug.toString(point));
+            return;
+        }
         if (!shipInfo.isBlockOccupied(point))
         {
             Debug.Log("removeBlock got unoccupied request " + ZDebug.toString(point));

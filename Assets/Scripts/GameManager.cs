@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
+        Application.targetFrameRate = GameOptions.targetFramerate;
         if (GameOptions.loadSavedGame)
         {
             loadGame();
@@ -51,8 +52,6 @@ public class GameManager : MonoBehaviour
 
     private void createStarport()
     {
-        shipController.createBlock(20,new IntVector3 (0,0,0));
-
         GameObject containerGameobject = new GameObject("Starport");
         starport3DView = gameObject.AddComponent<Starport3DView>();
         //starport3DView.genStarport(GameConstants.maxShipDimension, containerGameobject);
